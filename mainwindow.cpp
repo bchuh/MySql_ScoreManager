@@ -15,7 +15,7 @@ void MainWindow::on_buttomAdd_triggered()
         this->sScore=dialog->getSscore();
         //ui->textBrowser->setText(sNo+" "+sName+" "+sCourse+" "+QString::number(sScore));
         QSqlQuery query(db);
-        query.exec(QString("      ")
+        query.exec(QString("insert into student(sNo,sName,sCourse,sScore)values('%1','%2','%3','%4')")
                    .arg(dialog->getSno()).arg(dialog->getSname())
                    .arg(dialog->getScourse()).arg(dialog->getSscore())
                    );
@@ -62,12 +62,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     }else
     {
-        ui->textBrowser->append(" ");
+        ui->textBrowser->append(">Conected to schema: stu_sys");
     }
 
     QSqlQuery query(db);
 
-    query.exec("      ");
+    query.exec("create table if not exists student(sNo char(20) , sName char(20), sCourse char(20), sScore int,primary key(sNo,sCourse));");
     ui->textBrowser->append(">Created table: student\n>System is ready!\n");
 
 
@@ -88,7 +88,7 @@ void MainWindow::on_Button_show_clicked()
     ui->textBrowser->setText("====================================");
     while(query.next())
     {
-        ui->textBrowser->settext(query.value("sNo").toString()+"\t"+query.value("sName").toString()+"\t"+query.value("sCourse").toString()+"\t"+query.value("sScore").toString());
+        ui->textBrowser->append(query.value("sNo").toString()+"\t"+query.value("sName").toString()+"\t"+query.value("sCourse").toString()+"\t"+query.value("sScore").toString());
     }
     ui->textBrowser->append("====================================");
 }
@@ -104,7 +104,7 @@ void MainWindow::on_Button_drop_clicked()
         QString no=dialog->getComboNO();
         QString course=dialog->getComboCourse();
         qDebug()<<no<<course;
-        query.exec(     );
+        query.exec(QString("delete from student where sNo='%1' and sCourse='%2';").arg(no.trimmed()).arg(course.trimmed()));
     }
     delete dialog;
     on_Button_show_clicked();
@@ -117,7 +117,7 @@ void MainWindow::on_pushButton_clicked()
     ui->textBrowser->setText("--------------------------------------------------");
     while(query.next())
     {
-        ui->textBrowser->settext(query.value(0).toString()+"\t"+query.value(1).toString()+"\t"+"average: "+query.value(2).toString());
+        ui->textBrowser->append(query.value(0).toString()+"\t"+query.value(1).toString()+"\t"+"average: "+query.value(2).toString());
     }
     ui->textBrowser->append("--------------------------------------------------");
 

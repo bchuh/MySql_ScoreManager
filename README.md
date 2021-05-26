@@ -3,6 +3,7 @@ Author: Zhu Zengliang.
 
 + A student score managing system built with Qt framework.
 + A complete version will be uploaded when the homework is due.
++ For installing mysql driver on windows 10, check out the turoial here: https://www.mdeditor.tw/pl/g2KI/zh-tw
 &emsp;
 <img src="https://github.com/bchuh/ImageLib/blob/master/2021.4.21/stu_score_manager.gif" width = "600" height = "500" alt="Picture missing" align=center />
 
